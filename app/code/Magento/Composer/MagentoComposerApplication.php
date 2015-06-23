@@ -11,14 +11,15 @@ use Composer\Console\Application;
 class MagentoComposerApplication
 {
     public function __construct(
-        $pathToComposerJson,
-        $pathToComposerHome,
         Application $consoleApplication = null
     ) {
         $this->consoleApplication = $consoleApplication ? $consoleApplication : new Application();
         $this->consoleApplication->setAutoExit(false);
+    }
+
+    public function setConfig($pathToComposerHome, $pathToComposerJson)
+    {
         putenv('COMPOSER_HOME=' . $pathToComposerHome);
         putenv('COMPOSER=' . $pathToComposerJson);
-
     }
 }
