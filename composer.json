@@ -1,0 +1,20 @@
+{
+  "name": "magento/composer",
+  "description": "Magento composer library helps to instantiate Composer application and run Symfony commands.",
+  "type": "library",
+  "version": "0.74.0-beta8",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "require": {
+    "php": "~5.5.0|~5.6.0",
+    "composer/composer": "1.0.0-alpha8",
+    "symfony/console": "2.4.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Magento\\": "app/code/Magento/"
+    }
+  }
+}
