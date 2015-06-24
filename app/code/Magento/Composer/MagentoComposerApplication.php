@@ -9,21 +9,58 @@ namespace Magento\Composer;
 use Composer\Console\Application;
 use Composer\IO\BufferIO;
 use Composer\Factory as ComposerFactory;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class MagentoComposerApplication
 {
+    /**
+     * Trigger checks config
+     *
+     * @var bool
+     */
     private $configIsSet = false;
 
+    /**
+     * Path to Composer home directory
+     *
+     * @var string
+     */
     private $composerHome;
 
+    /**
+     * Path to composer.json file
+     *
+     * @var string
+     */
     private $composerJson;
 
+    /**
+     * Buffered output
+     *
+     * @var BufferedOutput
+     */
+    private $consoleOutput;
+
+    /**
+     * Constructs class
+     *
+     * @param Application $consoleApplication
+     * @param BufferedOutput $consoleOutput
+     */
     public function __construct(
-        Application $consoleApplication = null
+        Application $consoleApplication = null,
+        BufferedOutput $consoleOutput = null
     ) {
         $this->consoleApplication = $consoleApplication ? $consoleApplication : new Application();
+        $this->consoleOutput = $consoleOutput ? $consoleOutput : new BufferedOutput();
     }
 
+    /**
+     * Sets composer environment config
+     *
+     * @param string $pathToComposerHome
+     * @param string $pathToComposerJson
+     */
     public function setConfig($pathToComposerHome, $pathToComposerJson)
     {
         $this->composerJson = $pathToComposerJson;
@@ -37,6 +74,12 @@ class MagentoComposerApplication
 
     }
 
+    /**
+     * Returns composer object
+     *
+     * @return \Composer\Composer
+     * @throws \Exception
+     */
     public function getComposer()
     {
         if (!$this->configIsSet) {
@@ -45,5 +88,30 @@ class MagentoComposerApplication
 
         return ComposerFactory::create(new BufferIO(), $this->composerJson);
 
+    }
+
+    /**
+     * Runs composer command
+     *
+     * @param array $commandParams
+     * @return bool
+     * @throws \RuntimeException
+     */
+    public function runComposerCommand(array $commandParams)
+    {
+        $input = $this->consoleArrayInputFactory->create($commandParams);
+        $this->consoleApplication->setAutoExit(false);
+
+        $exitCode = $this->consoleApplication->run($input, $this->consoleOutput);
+
+        if ($exitCode) {
+            throw new \RuntimeException(
+                sprintf('Command "%s" failed: %s', $commandParams['command'], $this->consoleOutput->fetch())
+            );
+        }
+
+        //TODO: parse output based on command
+
+        return true;
     }
 }
