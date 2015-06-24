@@ -45,13 +45,17 @@ class MagentoComposerApplication
      * Constructs class
      *
      * @param Application $consoleApplication
+     * @param ConsoleArrayInputFactory $consoleArrayInputFactory
      * @param BufferedOutput $consoleOutput
      */
     public function __construct(
         Application $consoleApplication = null,
+        ConsoleArrayInputFactory $consoleArrayInputFactory = null,
         BufferedOutput $consoleOutput = null
     ) {
         $this->consoleApplication = $consoleApplication ? $consoleApplication : new Application();
+        $this->consoleArrayInputFactory = $consoleArrayInputFactory ? $consoleArrayInputFactory
+            : new ConsoleArrayInputFactory();
         $this->consoleOutput = $consoleOutput ? $consoleOutput : new BufferedOutput();
     }
 
