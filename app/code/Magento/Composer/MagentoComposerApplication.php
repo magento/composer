@@ -104,6 +104,8 @@ class MagentoComposerApplication
      */
     public function runComposerCommand(array $commandParams)
     {
+        $this->consoleApplication->resetComposer();
+
         if (!$this->configIsSet) {
             throw new \Exception('Please call setConfig method to configure composer');
         }
