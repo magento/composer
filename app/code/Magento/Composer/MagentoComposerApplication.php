@@ -87,7 +87,7 @@ class MagentoComposerApplication
     public function getComposer()
     {
         if (!$this->configIsSet) {
-            throw new \Exception('Please call setConfig method to set config');
+            throw new \Exception('Please call setConfig method to configure composer');
         }
 
         return ComposerFactory::create(new BufferIO(), $this->composerJson);
@@ -99,10 +99,15 @@ class MagentoComposerApplication
      *
      * @param array $commandParams
      * @return bool
+     * @throws \Exception
      * @throws \RuntimeException
      */
     public function runComposerCommand(array $commandParams)
     {
+        if (!$this->configIsSet) {
+            throw new \Exception('Please call setConfig method to configure composer');
+        }
+
         $input = $this->consoleArrayInputFactory->create($commandParams);
         $this->consoleApplication->setAutoExit(false);
 
@@ -116,6 +121,6 @@ class MagentoComposerApplication
 
         //TODO: parse output based on command
 
-        return true;
+        return $this->consoleOutput->fetch();
     }
 }
