@@ -23,4 +23,3 @@ class ConsoleArrayInputFactoryTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('\Symfony\Component\Console\Input\ArrayInput', $this->factory->create([]));
     }
 }
-

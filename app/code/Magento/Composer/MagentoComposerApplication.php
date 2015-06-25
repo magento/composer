@@ -104,14 +104,13 @@ class MagentoComposerApplication
      */
     public function runComposerCommand(array $commandParams)
     {
-        $this->consoleApplication->resetComposer();
-
         if (!$this->configIsSet) {
             throw new \Exception('Please call setConfig method to configure composer');
         }
 
+        $this->consoleApplication->resetComposer();
+
         $input = $this->consoleArrayInputFactory->create($commandParams);
-        $this->consoleApplication->setAutoExit(false);
 
         $exitCode = $this->consoleApplication->run($input, $this->consoleOutput);
 
