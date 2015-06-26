@@ -56,6 +56,11 @@ class MagentoComposerApplication
     private $consoleArrayInputFactory;
 
     /**
+     * @var Application
+     */
+    private $consoleApplication;
+
+    /**
      * Constructs class
      *
      * @param Application $consoleApplication
