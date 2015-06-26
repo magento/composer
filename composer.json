@@ -1,6 +1,6 @@
 {
   "name": "magento/composer",
-  "description": "Magento composer library helps to instantiate Composer application and run Symfony commands.",
+  "description": "Magento composer library helps to instantiate Composer application and run composer commands.",
   "type": "library",
   "version": "0.74.0-beta8",
   "license": [

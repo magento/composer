@@ -11,8 +11,17 @@ use Composer\IO\BufferIO;
 use Composer\Factory as ComposerFactory;
 use Symfony\Component\Console\Output\BufferedOutput;
 
+/**
+ * Class MagentoComposerApplication
+ *
+ * This class provides ability to set composer application settings and run any composer command.
+ * Also provides method to get Composer instance so you can have access to composer properties lie Locker
+ */
 class MagentoComposerApplication
 {
+
+    const COMPOSER_WORKING_DIR = '--working-dir';
+
     /**
      * Trigger checks config
      *
@@ -40,6 +49,11 @@ class MagentoComposerApplication
      * @var BufferedOutput
      */
     private $consoleOutput;
+
+    /**
+     * @var ConsoleArrayInputFactory
+     */
+    private $consoleArrayInputFactory;
 
     /**
      * Constructs class
@@ -109,7 +123,7 @@ class MagentoComposerApplication
 
         $this->consoleApplication->resetComposer();
 
-        $commandParams['--working-dir'] = dirname($this->composerJson);
+        $commandParams[self::COMPOSER_WORKING_DIR] = dirname($this->composerJson);
 
         $input = $this->consoleArrayInputFactory->create($commandParams);
 
