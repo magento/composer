@@ -71,7 +71,6 @@ class MagentoComposerApplication
         $this->composerHome = $pathToComposerHome;
 
         putenv('COMPOSER_HOME=' . $pathToComposerHome);
-        putenv('COMPOSER=' . $pathToComposerJson);
 
         $this->consoleApplication->setAutoExit(false);
         $this->configIsSet = true;
@@ -109,6 +108,8 @@ class MagentoComposerApplication
         }
 
         $this->consoleApplication->resetComposer();
+
+        $commandParams['--working-dir'] = dirname($this->composerJson);
 
         $input = $this->consoleArrayInputFactory->create($commandParams);
 

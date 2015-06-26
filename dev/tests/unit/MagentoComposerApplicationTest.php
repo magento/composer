@@ -78,7 +78,7 @@ class MagentoComposerApplicationTest extends PHPUnit_Framework_TestCase {
 
     function testRunCommand()
     {
-        $inputData = ['command'=>'update'];
+        $inputData = ['command'=>'update', '--working-dir' => '.'];
 
         $this->application->setConfig('path1', 'path2');
         $this->composerApplication->expects($this->once())->method('resetComposer');
