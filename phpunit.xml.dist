@@ -12,7 +12,7 @@
 
     <testsuites>
         <testsuite name="Magento Composer Library Test">
-            <directory>./dev/tests/unit/</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 
@@ -20,7 +20,7 @@
         <whitelist>
             <directory>./</directory>
             <exclude>
-                <directory>./dev/tests/unit</directory>
+                <directory>./tests</directory>
             </exclude>
         </whitelist>
     </filter>
