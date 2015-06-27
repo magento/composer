@@ -21,14 +21,7 @@ class MagentoComposerApplication
 {
 
     const COMPOSER_WORKING_DIR = '--working-dir';
-
-    /**
-     * Trigger checks config
-     *
-     * @var bool
-     */
-    private $configIsSet = false;
-
+    
     /**
      * Path to Composer home directory
      *
