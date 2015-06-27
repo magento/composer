@@ -63,11 +63,15 @@ class MagentoComposerApplication
     /**
      * Constructs class
      *
+     * @param string $pathToComposerHome
+     * @param string $pathToComposerJson
      * @param Application $consoleApplication
      * @param ConsoleArrayInputFactory $consoleArrayInputFactory
      * @param BufferedOutput $consoleOutput
      */
     public function __construct(
+        $pathToComposerHome,
+        $pathToComposerJson,
         Application $consoleApplication = null,
         ConsoleArrayInputFactory $consoleArrayInputFactory = null,
         BufferedOutput $consoleOutput = null
@@ -76,40 +80,24 @@ class MagentoComposerApplication
         $this->consoleArrayInputFactory = $consoleArrayInputFactory ? $consoleArrayInputFactory
             : new ConsoleArrayInputFactory();
         $this->consoleOutput = $consoleOutput ? $consoleOutput : new BufferedOutput();
-    }
 
-    /**
-     * Sets composer environment config
-     *
-     * @param string $pathToComposerHome
-     * @param string $pathToComposerJson
-     */
-    public function setConfig($pathToComposerHome, $pathToComposerJson)
-    {
         $this->composerJson = $pathToComposerJson;
         $this->composerHome = $pathToComposerHome;
 
         putenv('COMPOSER_HOME=' . $pathToComposerHome);
 
         $this->consoleApplication->setAutoExit(false);
-        $this->configIsSet = true;
-
     }
 
     /**
-     * Returns composer object
+     * Creates composer object
      *
      * @return \Composer\Composer
      * @throws \Exception
      */
-    public function getComposer()
+    public function createComposer()
     {
-        if (!$this->configIsSet) {
-            throw new \Exception('Please call setConfig method to configure composer');
-        }
-
         return ComposerFactory::create(new BufferIO(), $this->composerJson);
-
     }
 
     /**
@@ -117,15 +105,10 @@ class MagentoComposerApplication
      *
      * @param array $commandParams
      * @return bool
-     * @throws \Exception
      * @throws \RuntimeException
      */
     public function runComposerCommand(array $commandParams)
     {
-        if (!$this->configIsSet) {
-            throw new \Exception('Please call setConfig method to configure composer');
-        }
-
         $this->consoleApplication->resetComposer();
 
         $commandParams[self::COMPOSER_WORKING_DIR] = dirname($this->composerJson);

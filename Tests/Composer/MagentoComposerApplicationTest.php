@@ -49,19 +49,12 @@ class MagentoComposerApplicationTest extends PHPUnit_Framework_TestCase {
         $this->consoleOutput = $this->getMock('Symfony\Component\Console\Output\BufferedOutput', [], [], '', false);
 
         $this->application = new MagentoComposerApplication(
+            'path1',
+            'path2',
             $this->composerApplication,
             $this->inputFactory,
             $this->consoleOutput
         );
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Please call setConfig method to configure composer
-     */
-    function testMissedConfigSet()
-    {
-        $this->application->runComposerCommand([]);
     }
 
     /**
@@ -70,7 +63,6 @@ class MagentoComposerApplicationTest extends PHPUnit_Framework_TestCase {
      */
     function testWrongExitCode()
     {
-        $this->application->setConfig('path1', 'path2');
         $this->composerApplication->expects($this->once())->method('run')->willReturn(1);
 
         $this->application->runComposerCommand(['command'=>'update']);
@@ -80,7 +72,6 @@ class MagentoComposerApplicationTest extends PHPUnit_Framework_TestCase {
     {
         $inputData = ['command' => 'update', MagentoComposerApplication::COMPOSER_WORKING_DIR => '.'];
 
-        $this->application->setConfig('path1', 'path2');
         $this->composerApplication->expects($this->once())->method('resetComposer');
 
         $this->inputFactory->expects($this->once())->method('create')->with($inputData);
