@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
  * Class MagentoComposerApplication
  *
  * This class provides ability to set composer application settings and run any composer command.
- * Also provides method to get Composer instance so you can have access to composer properties lie Locker
+ * Also provides method to get Composer instance so you can have access composer properties lie Locker
  */
 class MagentoComposerApplication
 {
