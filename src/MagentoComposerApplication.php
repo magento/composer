@@ -97,14 +97,19 @@ class MagentoComposerApplication
      * Runs composer command
      *
      * @param array $commandParams
+     * @param string|null $workingDir
      * @return bool
      * @throws \RuntimeException
      */
-    public function runComposerCommand(array $commandParams)
+    public function runComposerCommand(array $commandParams, $workingDir = null)
     {
         $this->consoleApplication->resetComposer();
 
-        $commandParams[self::COMPOSER_WORKING_DIR] = dirname($this->composerJson);
+        if ($workingDir) {
+            $commandParams[self::COMPOSER_WORKING_DIR] = $workingDir;
+        } else {
+            $commandParams[self::COMPOSER_WORKING_DIR] = dirname($this->composerJson);
+        }
 
         $input = $this->consoleArrayInputFactory->create($commandParams);
 
