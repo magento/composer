@@ -147,7 +147,7 @@ class MagentoComposerApplication
             );
         } catch (\RuntimeException $e) {
             $errorMessage = $this->generateAdditionalErrorMessage($e->getMessage(), $packages, $workingDir);
-            throw new \RuntimeException($errorMessage . PHP_EOL . $e->getMessage());
+            throw new \RuntimeException($errorMessage . PHP_EOL . $e->getMessage(), $e->getCode(), $e);
         }
 
         return $output;
@@ -198,11 +198,11 @@ class MagentoComposerApplication
                 $versions = $this->getPackageVersions($output);
 
                 $conflicts[] = ' - ' . $package . ' version ' . $version
-                    . ' please try to upgrade it too, available package versions: ' . implode(', ', $versions);
+                    . ' please try to upgrade it to one of the following package versions: ' . implode(', ', $versions);
             }
 
-            $errorMessage = 'You are trying to update package '
-                . implode(' and ', $update) . PHP_EOL
+            $errorMessage = 'You are trying to update package(s) '
+                . implode(', ', $update) . PHP_EOL
                 . 'But looks like it conflicts with the following packages:' . PHP_EOL
                 . implode(PHP_EOL, $conflicts)
                 . PHP_EOL;
