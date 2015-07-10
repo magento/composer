@@ -136,7 +136,7 @@ class MagentoComposerApplication
     {
         try {
             // run require
-            $this->composerApp->runComposerCommand(
+            $this->runComposerCommand(
                 ['command' => 'require', 'packages' => $packages, '--no-update' => true],
                 $workingDir
             );
