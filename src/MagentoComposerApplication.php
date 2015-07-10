@@ -203,7 +203,7 @@ class MagentoComposerApplication
 
             $errorMessage = 'You are trying to update package(s) '
                 . implode(', ', $update) . PHP_EOL
-                . 'But looks like it conflicts with the following packages:' . PHP_EOL
+                . "We've detected conflicts with the following packages:" . PHP_EOL
                 . implode(PHP_EOL, $conflicts)
                 . PHP_EOL;
         }
