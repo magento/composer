@@ -135,6 +135,12 @@ class MagentoComposerApplication
     public function runUpdateDryRun($packages, $workingDir = null)
     {
         try {
+            // run require
+            $this->composerApp->runComposerCommand(
+                ['command' => 'require', 'packages' => $packages, '--no-update' => true],
+                $workingDir
+            );
+
             $output = $this->runComposerCommand(
                 ['command' => 'update', '--dry-run' => true],
                 $workingDir
