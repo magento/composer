@@ -21,7 +21,7 @@ class MagentoComposerApplication
 {
 
     const COMPOSER_WORKING_DIR = '--working-dir';
-    
+
     /**
      * Path to Composer home directory
      *
@@ -121,8 +121,144 @@ class MagentoComposerApplication
             );
         }
 
-        //TODO: parse output based on command
-
         return $this->consoleOutput->fetch();
+    }
+
+    /**
+     * Runs composer update --dry-run command
+     *
+     * @param array $packages
+     * @param string|null $workingDir
+     * @return string
+     */
+    public function runUpdateDryRun($packages, $workingDir = null)
+    {
+        try {
+            $output = $this->runComposerCommand(
+                ['command' => 'update', '--dry-run' => true],
+                $workingDir
+            );
+        } catch (\RuntimeException $e) {
+
+            $errorMessage = $this->generateAdditionalErrorMessage($e->getMessage(), $packages);
+
+            throw new \RuntimeException($errorMessage . PHP_EOL . $e->getMessage());
+        }
+
+        return $output;
+    }
+
+    /**
+     * Generates additional explanation for error message
+     *
+     * @param array $message
+     * @param array $inputPackages
+     * @param string|null $workingDir
+     * @return string
+     */
+    protected function generateAdditionalErrorMessage($message, $inputPackages, $workingDir = null) {
+
+        $matches  = [];
+        $errorMessage = '';
+        $packages = [];
+
+        $rawLines = explode(PHP_EOL, $message);
+
+        foreach ($rawLines as $line) {
+            if (preg_match(
+                '/- (.*) requires (.*) -> no matching package/',
+                $line,
+                $matches
+
+            )
+            ) {
+                $packages[] = $matches[1];
+                $packages[] = $matches[2];
+            }
+        }
+
+        if (!empty($packages)) {
+            $packages = array_unique($packages);
+            $packages = $this->explodePackagesAndVersions($packages);
+            $inputPackages = $this->explodePackagesAndVersions($inputPackages);
+
+            $update = [];
+            $conflicts = [];
+
+            foreach ($inputPackages as $package => $version) {
+                if (isset($packages[$package])) {
+                    $currentVersion = $packages[$package];
+                    $update[] = $package . ' from version ' . $currentVersion . ' to ' . $version;
+                }
+            }
+
+            foreach (array_diff_key($packages, $inputPackages) as $package => $version) {
+
+                $output = $this->runComposerCommand(
+                    ['command' => 'show', 'package' => $package],
+                    $workingDir
+                );
+
+                $versions = $this->getPackageVersions($output);
+
+                $conflicts[] = ' - ' . $package . ' version ' . $version
+                    . ' please try to upgrade it too, available package versions: ' . implode(', ', $versions);
+            }
+
+            $errorMessage = 'You are trying to update package '
+                . implode(' and ', $update) . PHP_EOL
+                . 'But looks like it conflicts with the following packages:' . PHP_EOL
+                . implode(PHP_EOL, $conflicts)
+                . PHP_EOL;
+        }
+
+        return $errorMessage;
+    }
+
+    /**
+     * Returns array that contains package as key and version as value
+     *
+     * @param array $packages
+     * @return array
+     */
+    protected function explodePackagesAndVersions($packages)
+    {
+        $packagesAndVersions = [];
+        foreach ($packages as $package) {
+            $package = explode(' ', $package);
+            $packagesAndVersions[$package[0]] = $package[1];
+        }
+
+        return $packagesAndVersions;
+    }
+
+    /**
+     * Returns package versions except currently installed based on composer show command output
+     *
+     * @param string $outputMessage
+     * @return array
+     */
+    protected function getPackageVersions($outputMessage)
+    {
+        $versions = [];
+
+        if (preg_match(
+            '/versions : (.*)/',
+            $outputMessage,
+            $matches
+
+        )
+        ) {
+            $versions = $matches[1];
+            $versions = explode(', ', $versions);
+            $versions = array_filter(
+                $versions,
+                function ($version) {
+                    return strpos($version, '*') === false;
+                }
+            );
+        }
+
+        return $versions;
     }
 }
