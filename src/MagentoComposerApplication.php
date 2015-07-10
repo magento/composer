@@ -130,6 +130,7 @@ class MagentoComposerApplication
      * @param array $packages
      * @param string|null $workingDir
      * @return string
+     * @throws \RuntimeException
      */
     public function runUpdateDryRun($packages, $workingDir = null)
     {
@@ -139,9 +140,7 @@ class MagentoComposerApplication
                 $workingDir
             );
         } catch (\RuntimeException $e) {
-
-            $errorMessage = $this->generateAdditionalErrorMessage($e->getMessage(), $packages);
-
+            $errorMessage = $this->generateAdditionalErrorMessage($e->getMessage(), $packages, $workingDir);
             throw new \RuntimeException($errorMessage . PHP_EOL . $e->getMessage());
         }
 
@@ -161,17 +160,10 @@ class MagentoComposerApplication
         $matches  = [];
         $errorMessage = '';
         $packages = [];
-
         $rawLines = explode(PHP_EOL, $message);
 
         foreach ($rawLines as $line) {
-            if (preg_match(
-                '/- (.*) requires (.*) -> no matching package/',
-                $line,
-                $matches
-
-            )
-            ) {
+            if (preg_match('/- (.*) requires (.*) -> no matching package/', $line, $matches)) {
                 $packages[] = $matches[1];
                 $packages[] = $matches[2];
             }
@@ -187,13 +179,11 @@ class MagentoComposerApplication
 
             foreach ($inputPackages as $package => $version) {
                 if (isset($packages[$package])) {
-                    $currentVersion = $packages[$package];
-                    $update[] = $package . ' from version ' . $currentVersion . ' to ' . $version;
+                    $update[] = $package . ' to ' . $version;
                 }
             }
 
             foreach (array_diff_key($packages, $inputPackages) as $package => $version) {
-
                 $output = $this->runComposerCommand(
                     ['command' => 'show', 'package' => $package],
                     $workingDir
@@ -242,13 +232,7 @@ class MagentoComposerApplication
     {
         $versions = [];
 
-        if (preg_match(
-            '/versions : (.*)/',
-            $outputMessage,
-            $matches
-
-        )
-        ) {
+        if (preg_match('/versions : (.*)/', $outputMessage, $matches)) {
             $versions = $matches[1];
             $versions = explode(', ', $versions);
             $versions = array_filter(
