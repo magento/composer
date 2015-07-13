@@ -132,7 +132,7 @@ class MagentoComposerApplication
      * @return string
      * @throws \RuntimeException
      */
-    public function runUpdateDryRun($packages, $workingDir = null)
+    public function runRequireUpdateDryRun($packages, $workingDir = null)
     {
         try {
             // run require
