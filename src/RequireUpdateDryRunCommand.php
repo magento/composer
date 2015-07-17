@@ -110,11 +110,11 @@ class RequireUpdateDryRunCommand
                     return false;
                 }
 
-                $currentVersion = $packageInfo['current_version'];
+                $currentVersion = $packageInfo[InfoCommand::CURRENT_VERSION];
 
-                if (empty($packageInfo['available_versions'])) {
+                if (empty($packageInfo[InfoCommand::AVAILABLE_VERSIONS])) {
                     $packageInfo = $this->infoCommand->run($package);
-                    if (empty($packageInfo['available_versions'])) {
+                    if (empty($packageInfo[InfoCommand::AVAILABLE_VERSIONS])) {
                         return false;
                     }
                 }
