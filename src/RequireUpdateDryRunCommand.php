@@ -6,7 +6,9 @@
 
 namespace Magento\Composer;
 
-
+/**
+ * Class RequireUpdateDryRunCommand calls composer require and update --dry-run commands
+ */
 class RequireUpdateDryRunCommand
 {
     /**
@@ -76,7 +78,6 @@ class RequireUpdateDryRunCommand
      */
     protected function generateAdditionalErrorMessage($message, $inputPackages)
     {
-
         $matches  = [];
         $errorMessage = '';
         $packages = [];

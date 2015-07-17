@@ -11,7 +11,6 @@ namespace Magento\Composer;
  */
 class InfoCommand
 {
-
     /**
      * @var MagentoComposerApplication
      */
@@ -32,10 +31,9 @@ class InfoCommand
      *
      * @param string $package
      * @param bool $installed
-     * @param null $version
      * @return array|bool
      */
-    public function run($package, $installed = false, $version = null)
+    public function run($package, $installed = false)
     {
         $commandParameters = [
             'command' => 'info',
@@ -60,7 +58,6 @@ class InfoCommand
             if (count($chunk) === 2) {
                 $result[trim($chunk[0])] = trim($chunk[1]);
             }
-
         }
 
         $result = $this->extractVersions($result);
@@ -83,7 +80,12 @@ class InfoCommand
             $packageInfo['available_versions'] = [];
         } else {
             $currentVersion = array_values(preg_grep("/^\*.*/", $versions));
-            $packageInfo['current_version'] = str_replace('* ', '', $currentVersion[0]);
+            if ($currentVersion) {
+                $packageInfo['current_version'] = str_replace('* ', '', $currentVersion[0]);
+            } else {
+                $packageInfo['current_version'] = '';
+            }
+
             $packageInfo['available_versions'] = array_values(preg_grep("/^\*.*/", $versions, PREG_GREP_INVERT));
         }
 

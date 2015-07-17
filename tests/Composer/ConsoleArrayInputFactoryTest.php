@@ -6,7 +6,8 @@
 
 use Magento\Composer\ConsoleArrayInputFactory;
 
-class ConsoleArrayInputFactoryTest extends PHPUnit_Framework_TestCase {
+class ConsoleArrayInputFactoryTest extends PHPUnit_Framework_TestCase
+{
 
     /**
      * @var ConsoleArrayInputFactory

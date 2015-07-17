@@ -9,8 +9,8 @@ use Magento\Composer\MagentoComposerApplication;
 use Magento\Composer\ConsoleArrayInputFactory;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-class MagentoComposerApplicationTest extends PHPUnit_Framework_TestCase {
-
+class MagentoComposerApplicationTest extends PHPUnit_Framework_TestCase
+{
     /**
      * @var MagentoComposerApplication
      */
