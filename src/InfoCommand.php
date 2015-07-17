@@ -27,7 +27,7 @@ class InfoCommand
     }
 
     /**
-     * Runs InfoCommand command
+     * Runs composer info command
      *
      * @param string $package
      * @param bool $installed
@@ -44,9 +44,7 @@ class InfoCommand
         $result = [];
 
         try {
-            $output = $this->magentoComposerApplication->runComposerCommand(
-                $commandParameters
-            );
+            $output = $this->magentoComposerApplication->runComposerCommand($commandParameters);
         } catch (\RuntimeException $e) {
             return false;
         }
