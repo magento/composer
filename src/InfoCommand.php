@@ -23,6 +23,11 @@ class InfoCommand
      */
     const AVAILABLE_VERSIONS = 'available_versions';
 
+    /**
+     * New versions
+     */
+    const NEW_VERSIONS = 'new_versions';
+
 
     /**
      * @var MagentoComposerApplication
@@ -98,6 +103,21 @@ class InfoCommand
             }
 
             $packageInfo[self::AVAILABLE_VERSIONS] = array_values(preg_grep("/^\*.*/", $versions, PREG_GREP_INVERT));
+        }
+
+        if (count($packageInfo[self::AVAILABLE_VERSIONS]) > 0) {
+            if ($packageInfo[self::CURRENT_VERSION]) {
+                foreach ($packageInfo[self::AVAILABLE_VERSIONS] as $version) {
+                    if (version_compare($packageInfo[self::CURRENT_VERSION], $version, '<')) {
+                        $packageInfo[self::NEW_VERSIONS][] = $version;
+                    }
+                }
+                $packageInfo[self::NEW_VERSIONS][] = $packageInfo[self::CURRENT_VERSION];
+            } else {
+                $packageInfo[self::NEW_VERSIONS] = $packageInfo[self::AVAILABLE_VERSIONS];
+            }
+        } else {
+            $packageInfo[self::NEW_VERSIONS] = [];
         }
 
         return $packageInfo;
