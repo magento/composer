@@ -113,7 +113,6 @@ class InfoCommand
                         $packageInfo[self::NEW_VERSIONS][] = $version;
                     }
                 }
-                $packageInfo[self::NEW_VERSIONS][] = $packageInfo[self::CURRENT_VERSION];
             } else {
                 $packageInfo[self::NEW_VERSIONS] = $packageInfo[self::AVAILABLE_VERSIONS];
             }
