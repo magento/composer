@@ -90,10 +90,11 @@ class InfoCommand
     private function extractVersions($packageInfo)
     {
         $versions = explode(', ', $packageInfo[self::VERSIONS]);
+        $packageInfo[self::NEW_VERSIONS] = [];
+        $packageInfo[self::AVAILABLE_VERSIONS] = [];
 
         if (count($versions) === 1) {
             $packageInfo[self::CURRENT_VERSION] = str_replace('* ', '', $packageInfo[self::VERSIONS]);
-            $packageInfo[self::AVAILABLE_VERSIONS] = [];
         } else {
             $currentVersion = array_values(preg_grep("/^\*.*/", $versions));
             if ($currentVersion) {
@@ -116,8 +117,6 @@ class InfoCommand
             } else {
                 $packageInfo[self::NEW_VERSIONS] = $packageInfo[self::AVAILABLE_VERSIONS];
             }
-        } else {
-            $packageInfo[self::NEW_VERSIONS] = [];
         }
 
         return $packageInfo;
