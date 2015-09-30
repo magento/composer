@@ -67,7 +67,7 @@ class InfoCommand
             return false;
         }
 
-        $rawLines = explode(PHP_EOL, $output);
+        $rawLines = explode("\n", str_replace("\r\n", "\n", $output));
 
         foreach ($rawLines as $line) {
             $chunk = explode(':', $line);
