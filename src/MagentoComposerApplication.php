@@ -23,9 +23,9 @@ class MagentoComposerApplication
     const COMPOSER_WORKING_DIR = '--working-dir';
 
     /**
-     * Path to Composer home directory
+     * Composer home directory changer
      *
-     * @var string
+     * @var HomeEnvironmentChanger
      */
     private $composerHome;
 
@@ -75,9 +75,7 @@ class MagentoComposerApplication
         $this->consoleOutput = $consoleOutput ? $consoleOutput : new BufferedOutput();
 
         $this->composerJson = $pathToComposerJson;
-        $this->composerHome = $pathToComposerHome;
-
-        putenv('COMPOSER_HOME=' . $pathToComposerHome);
+        $this->composerHome = HomeEnvironmentChanger::create($pathToComposerHome)->change();
 
         $this->consoleApplication->setAutoExit(false);
     }
