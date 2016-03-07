@@ -53,10 +53,12 @@ class InfoCommand
      */
     public function run($package, $installed = false)
     {
+        $showAllPackages = !$installed;
         $commandParameters = [
             'command' => 'info',
             'package' => $package,
-            '-i' => $installed
+            '-i' => $installed,
+            '--all' => $showAllPackages,
         ];
 
         $result = [];
