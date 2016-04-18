@@ -54,8 +54,6 @@ class InfoCommand
             '-i' => $installed
         ];
 
-        $result = [];
-
         try {
             $output = $this->magentoComposerApplication->runComposerCommand($commandParameters);
         } catch (\RuntimeException $e) {
@@ -72,6 +70,10 @@ class InfoCommand
         }
 
         $result = $this->extractVersions($result);
+
+        if (!isset($result['name']) && isset($result['current_version'])) {
+            $result['name'] = $package;
+        }
 
         return $result;
     }
