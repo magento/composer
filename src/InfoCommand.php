@@ -61,7 +61,7 @@ class InfoCommand
         }
 
         $rawLines = explode(PHP_EOL, $output);
-
+        $result = [];
         foreach ($rawLines as $line) {
             $chunk = explode(':', $line);
             if (count($chunk) === 2) {
