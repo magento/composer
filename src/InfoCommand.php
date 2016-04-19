@@ -23,6 +23,10 @@ class InfoCommand
      */
     const AVAILABLE_VERSIONS = 'available_versions';
 
+    /**
+     *  Package name
+     */
+    const NAME = 'name';
 
     /**
      * @var MagentoComposerApplication
@@ -71,8 +75,8 @@ class InfoCommand
 
         $result = $this->extractVersions($result);
 
-        if (!isset($result['name']) && isset($result['current_version'])) {
-            $result['name'] = $package;
+        if (!isset($result[self::NAME]) && isset($result[self::CURRENT_VERSION])) {
+            $result[self::NAME] = $package;
         }
 
         return $result;
