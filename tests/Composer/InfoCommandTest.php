@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2015 Magento. All rights reserved.
+ * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -61,7 +61,8 @@ php >=5.4.11
                 'type' => 'library',
                 'names' => '3rdp/a',
                 'current_version' => '1.0.0',
-                'available_versions' => []
+                'available_versions' => [],
+                'new_versions' => []
             ],
             $result
         );
@@ -97,6 +98,10 @@ php >=5.4.11
                     'available_versions' => [
                         '1.0.0',
                         '1.1.0'
+                    ],
+                    'new_versions' => [
+                        '1.0.0',
+                        '1.1.0'
                     ]
                 ]
             ],
@@ -122,6 +127,9 @@ php >=5.4.11
                     'available_versions' => [
                         '1.0.0',
                         '1.1.0',
+                        '1.2.0'
+                    ],
+                    'new_versions' => [
                         '1.2.0'
                     ]
                 ]

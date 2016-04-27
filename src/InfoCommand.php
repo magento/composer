@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2015 Magento. All rights reserved.
+ * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -29,6 +29,12 @@ class InfoCommand
     const NAME = 'name';
 
     /**
+     * New versions
+     */
+    const NEW_VERSIONS = 'new_versions';
+
+
+    /**
      * @var MagentoComposerApplication
      */
     protected $magentoComposerApplication;
@@ -52,10 +58,12 @@ class InfoCommand
      */
     public function run($package, $installed = false)
     {
+        $showAllPackages = !$installed;
         $commandParameters = [
             'command' => 'info',
             'package' => $package,
-            '-i' => $installed
+            '-i' => $installed,
+            '--all' => $showAllPackages,
         ];
 
         try {
@@ -64,8 +72,8 @@ class InfoCommand
             return false;
         }
 
-        $rawLines = explode(PHP_EOL, $output);
-        $result = [];
+        $rawLines = explode("\n", str_replace("\r\n", "\n", $output));
+
         foreach ($rawLines as $line) {
             $chunk = explode(':', $line);
             if (count($chunk) === 2) {
@@ -91,10 +99,11 @@ class InfoCommand
     private function extractVersions($packageInfo)
     {
         $versions = explode(', ', $packageInfo[self::VERSIONS]);
+        $packageInfo[self::NEW_VERSIONS] = [];
+        $packageInfo[self::AVAILABLE_VERSIONS] = [];
 
         if (count($versions) === 1) {
             $packageInfo[self::CURRENT_VERSION] = str_replace('* ', '', $packageInfo[self::VERSIONS]);
-            $packageInfo[self::AVAILABLE_VERSIONS] = [];
         } else {
             $currentVersion = array_values(preg_grep("/^\*.*/", $versions));
             if ($currentVersion) {
@@ -104,6 +113,18 @@ class InfoCommand
             }
 
             $packageInfo[self::AVAILABLE_VERSIONS] = array_values(preg_grep("/^\*.*/", $versions, PREG_GREP_INVERT));
+        }
+
+        if (count($packageInfo[self::AVAILABLE_VERSIONS]) > 0) {
+            if ($packageInfo[self::CURRENT_VERSION]) {
+                foreach ($packageInfo[self::AVAILABLE_VERSIONS] as $version) {
+                    if (version_compare($packageInfo[self::CURRENT_VERSION], $version, '<')) {
+                        $packageInfo[self::NEW_VERSIONS][] = $version;
+                    }
+                }
+            } else {
+                $packageInfo[self::NEW_VERSIONS] = $packageInfo[self::AVAILABLE_VERSIONS];
+            }
         }
 
         return $packageInfo;
