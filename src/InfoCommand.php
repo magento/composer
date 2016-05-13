@@ -73,7 +73,7 @@ class InfoCommand
         }
 
         $rawLines = explode("\n", str_replace("\r\n", "\n", $output));
-	$result = [];
+        $result = [];
 
         foreach ($rawLines as $line) {
             $chunk = explode(':', $line);
