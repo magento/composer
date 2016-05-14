@@ -24,6 +24,11 @@ class InfoCommand
     const AVAILABLE_VERSIONS = 'available_versions';
 
     /**
+     *  Package name
+     */
+    const NAME = 'name';
+
+    /**
      * New versions
      */
     const NEW_VERSIONS = 'new_versions';
@@ -61,8 +66,6 @@ class InfoCommand
             '--all' => $showAllPackages,
         ];
 
-        $result = [];
-
         try {
             $output = $this->magentoComposerApplication->runComposerCommand($commandParameters);
         } catch (\RuntimeException $e) {
@@ -70,6 +73,7 @@ class InfoCommand
         }
 
         $rawLines = explode("\n", str_replace("\r\n", "\n", $output));
+        $result = [];
 
         foreach ($rawLines as $line) {
             $chunk = explode(':', $line);
@@ -79,6 +83,10 @@ class InfoCommand
         }
 
         $result = $this->extractVersions($result);
+
+        if (!isset($result[self::NAME]) && isset($result[self::CURRENT_VERSION])) {
+            $result[self::NAME] = $package;
+        }
 
         return $result;
     }
