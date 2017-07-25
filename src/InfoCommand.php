@@ -72,7 +72,7 @@ class InfoCommand
             return false;
         }
 
-        $rawLines = explode("\n", str_replace("\r\n", "\n", $output));
+        $rawLines = explode("\n", str_replace("\r\n", "\n", preg_replace('/\x08+/', "\n", $output)));
         $result = [];
 
         foreach ($rawLines as $line) {
