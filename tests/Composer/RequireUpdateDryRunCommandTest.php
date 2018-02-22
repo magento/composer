@@ -64,8 +64,8 @@ Read <https://getcomposer.org/doc/articles/troubleshooting.md> for further commo
 
     protected function setUp()
     {
-        $this->application = $this->createMock(Magento\Composer\MagentoComposerApplication::class);
-        $this->infoCommand = $this->createMock(Magento\Composer\InfoCommand::class);
+        $this->application = $this->createMock(\Magento\Composer\MagentoComposerApplication::class);
+        $this->infoCommand = $this->createMock(\Magento\Composer\InfoCommand::class);
 
         $this->requireUpdateDryRunCommand = new RequireUpdateDryRunCommand(
             $this->application,

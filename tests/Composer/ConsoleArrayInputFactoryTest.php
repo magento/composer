@@ -21,6 +21,6 @@ class ConsoleArrayInputFactoryTest extends \PHPUnit\Framework\TestCase
 
     public function testCreate()
     {
-        $this->assertInstanceOf(Symfony\Component\Console\Input\ArrayInput::class, $this->factory->create([]));
+        $this->assertInstanceOf(\Symfony\Component\Console\Input\ArrayInput::class, $this->factory->create([]));
     }
 }
