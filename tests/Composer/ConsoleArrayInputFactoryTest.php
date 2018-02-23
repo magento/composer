@@ -6,7 +6,7 @@
 
 use Magento\Composer\ConsoleArrayInputFactory;
 
-class ConsoleArrayInputFactoryTest extends PHPUnit_Framework_TestCase
+class ConsoleArrayInputFactoryTest extends \PHPUnit\Framework\TestCase
 {
 
     /**
@@ -21,6 +21,6 @@ class ConsoleArrayInputFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-        $this->assertInstanceOf('\Symfony\Component\Console\Input\ArrayInput', $this->factory->create([]));
+        $this->assertInstanceOf(\Symfony\Component\Console\Input\ArrayInput::class, $this->factory->create([]));
     }
 }
