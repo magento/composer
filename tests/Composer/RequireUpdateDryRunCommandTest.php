@@ -8,7 +8,7 @@ use Magento\Composer\MagentoComposerApplication;
 use Magento\Composer\InfoCommand;
 use Magento\Composer\RequireUpdateDryRunCommand;
 
-class RequireUpdateDryRunCommandTest extends PHPUnit_Framework_TestCase
+class RequireUpdateDryRunCommandTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var MagentoComposerApplication|\PHPUnit_Framework_MockObject_MockObject
@@ -64,8 +64,8 @@ Read <https://getcomposer.org/doc/articles/troubleshooting.md> for further commo
 
     protected function setUp()
     {
-        $this->application = $this->getMock('Magento\Composer\MagentoComposerApplication', [], [], '', false, false);
-        $this->infoCommand = $this->getMock('Magento\Composer\InfoCommand', [], [], '', false, false);
+        $this->application = $this->createMock(\Magento\Composer\MagentoComposerApplication::class);
+        $this->infoCommand = $this->createMock(\Magento\Composer\InfoCommand::class);
 
         $this->requireUpdateDryRunCommand = new RequireUpdateDryRunCommand(
             $this->application,
