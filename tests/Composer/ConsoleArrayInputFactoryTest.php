@@ -4,9 +4,13 @@
  * See COPYING.txt for license details.
  */
 
-use Magento\Composer\ConsoleArrayInputFactory;
+namespace Magento\Composer\Tests;
 
-class ConsoleArrayInputFactoryTest extends \PHPUnit\Framework\TestCase
+use Magento\Composer\ConsoleArrayInputFactory;
+use Symfony\Component\Console\Input\ArrayInput;
+use PHPUnit\Framework\TestCase;
+
+class ConsoleArrayInputFactoryTest extends TestCase
 {
 
     /**
@@ -14,13 +18,13 @@ class ConsoleArrayInputFactoryTest extends \PHPUnit\Framework\TestCase
      */
     protected $factory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->factory = new ConsoleArrayInputFactory();
     }
 
     public function testCreate()
     {
-        $this->assertInstanceOf(\Symfony\Component\Console\Input\ArrayInput::class, $this->factory->create([]));
+        $this->assertInstanceOf(ArrayInput::class, $this->factory->create([]));
     }
 }

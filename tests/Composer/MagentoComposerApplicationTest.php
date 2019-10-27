@@ -4,12 +4,15 @@
  * See COPYING.txt for license details.
  */
 
+namespace Magento\Composer\Tests;
+
 use Composer\Console\Application;
 use Magento\Composer\MagentoComposerApplication;
 use Magento\Composer\ConsoleArrayInputFactory;
 use Symfony\Component\Console\Output\BufferedOutput;
+use PHPUnit\Framework\TestCase;
 
-class MagentoComposerApplicationTest extends \PHPUnit\Framework\TestCase
+class MagentoComposerApplicationTest extends TestCase
 {
     /**
      * @var MagentoComposerApplication

@@ -12,16 +12,13 @@
 
     <testsuites>
         <testsuite name="Magento Composer Library Test">
-            <directory>./tests/</directory>
+            <directory suffix="Test.php">./tests/</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>./</directory>
-            <exclude>
-                <directory>./tests</directory>
-            </exclude>
+            <directory>./src/</directory>
         </whitelist>
     </filter>
 </phpunit>

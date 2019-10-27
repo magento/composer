@@ -4,11 +4,14 @@
  * See COPYING.txt for license details.
  */
 
+namespace Magento\Composer\Tests;
+
 use Magento\Composer\MagentoComposerApplication;
 use Magento\Composer\InfoCommand;
 use Magento\Composer\RequireUpdateDryRunCommand;
+use PHPUnit\Framework\TestCase;
 
-class RequireUpdateDryRunCommandTest extends \PHPUnit\Framework\TestCase
+class RequireUpdateDryRunCommandTest extends TestCase
 {
     /**
      * @var MagentoComposerApplication|\PHPUnit_Framework_MockObject_MockObject

@@ -4,10 +4,13 @@
  * See COPYING.txt for license details.
  */
 
+namespace Magento\Composer\Tests;
+
 use Magento\Composer\MagentoComposerApplication;
 use Magento\Composer\InfoCommand;
+use PHPUnit\Framework\TestCase;
 
-class InfoCommandTest extends \PHPUnit\Framework\TestCase
+class InfoCommandTest extends TestCase
 {
 
     private $installedOutput = 'name     : 3rdp/a
