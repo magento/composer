@@ -2,7 +2,7 @@
   "name": "magento/composer",
   "description": "Magento composer library helps to instantiate Composer application and run composer commands.",
   "type": "library",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
@@ -10,7 +10,7 @@
   "require": {
     "php": "~7.1.3||~7.2.0||~7.3.0",
     "composer/composer": "^1.6",
-    "symfony/console": "~4.0.0 || ~4.1.0"
+    "symfony/console": "~4.0.0||~4.1.0||~4.2.0||~4.3.0||~4.4.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~7.0.0"
