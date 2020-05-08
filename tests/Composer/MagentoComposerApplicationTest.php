@@ -31,7 +31,7 @@ class MagentoComposerApplicationTest extends \PHPUnit\Framework\TestCase
      */
     protected $consoleOutput;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->composerApplication = $this->createMock(\Composer\Console\Application::class);
         $this->inputFactory = $this->createMock(\Magento\Composer\ConsoleArrayInputFactory::class);
@@ -46,13 +46,11 @@ class MagentoComposerApplicationTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Command "update" failed
-     */
     function testWrongExitCode()
     {
         $this->composerApplication->expects($this->once())->method('run')->willReturn(1);
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Command "update" failed');
 
         $this->application->runComposerCommand(['command'=>'update']);
     }
