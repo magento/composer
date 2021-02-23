@@ -72,7 +72,7 @@ class RequireUpdateDryRunCommand
     /**
      * Generates additional explanation for error message
      *
-     * @param array $message
+     * @param string $message
      * @param array $inputPackages
      * @return string
      */

@@ -6,3 +6,4 @@
 atlassian*
 /.idea
 /.gitattributes
+/composer.lock
