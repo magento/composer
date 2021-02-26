@@ -7,6 +7,7 @@
 use Composer\Console\Application;
 use Magento\Composer\MagentoComposerApplication;
 use Magento\Composer\ConsoleArrayInputFactory;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 class MagentoComposerApplicationTest extends \PHPUnit\Framework\TestCase
@@ -17,17 +18,17 @@ class MagentoComposerApplicationTest extends \PHPUnit\Framework\TestCase
     protected $application;
 
     /**
-     * @var Application|\PHPUnit_Framework_MockObject_MockObject
+     * @var Application|MockObject
      */
     protected $composerApplication;
 
     /**
-     * @var ConsoleArrayInputFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var ConsoleArrayInputFactory|MockObject
      */
     protected $inputFactory;
 
     /**
-     * @var BufferedOutput|\PHPUnit_Framework_MockObject_MockObject
+     * @var BufferedOutput|MockObject
      */
     protected $consoleOutput;
 

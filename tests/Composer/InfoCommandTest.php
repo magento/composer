@@ -6,6 +6,7 @@
 
 use Magento\Composer\MagentoComposerApplication;
 use Magento\Composer\InfoCommand;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class InfoCommandTest extends \PHPUnit\Framework\TestCase
 {
@@ -22,7 +23,7 @@ php >=5.4.11
 3rdp/c 1.1.0';
 
     /**
-     * @var MagentoComposerApplication|\PHPUnit_Framework_MockObject_MockObject
+     * @var MagentoComposerApplication|MockObject
      */
     protected $application;
 
