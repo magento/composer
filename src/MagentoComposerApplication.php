@@ -65,9 +65,9 @@ class MagentoComposerApplication
     public function __construct(
         $pathToComposerHome,
         $pathToComposerJson,
-        Application $consoleApplication = null,
-        ConsoleArrayInputFactory $consoleArrayInputFactory = null,
-        BufferedOutput $consoleOutput = null
+        ?Application $consoleApplication = null,
+        ?ConsoleArrayInputFactory $consoleArrayInputFactory = null,
+        ?BufferedOutput $consoleOutput = null
     ) {
         $this->consoleApplication = $consoleApplication ? $consoleApplication : new Application();
         $this->consoleArrayInputFactory = $consoleArrayInputFactory ? $consoleArrayInputFactory

@@ -34,7 +34,8 @@ class MagentoComposerApplicationTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->composerApplication = $this->createMock(\Composer\Console\Application::class);
+        $this->composerApplication = $this->getMockBuilder('Composer\Console\Application')
+            ->getMock();
         $this->inputFactory = $this->createMock(\Magento\Composer\ConsoleArrayInputFactory::class);
         $this->consoleOutput = $this->createMock(\Symfony\Component\Console\Output\BufferedOutput::class);
 
