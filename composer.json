@@ -2,7 +2,7 @@
   "name": "magento/composer",
   "description": "Magento composer library helps to instantiate Composer application and run composer commands.",
   "type": "library",
-  "version": "1.10.1-beta1",
+  "version": "1.10.1",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
